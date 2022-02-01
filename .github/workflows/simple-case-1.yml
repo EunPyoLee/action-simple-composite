@@ -1,14 +1,20 @@
+name: simple-composite-workflow
 on: [push]
 
 jobs:
-  hello_world_job:
+  hellow_world_job:
     runs-on: ubuntu-latest
     name: A job to say hello
     steps:
-      - uses: actions/checkout@v2
-      - id: foo
+      - name: checkout@v2 use step
+        id: checkout-step
+        uses: actions/checkout@v2
+      - name: action-simple-composite@v1 use step
+        id: action-simple-composite-step
         uses: EunPyoLee/action-simple-composite@v1
         with:
           who-to-greet: '${{github.actor}}'
-      - run: echo random-number ${{ steps.foo.outputs.random-number }}
+      - name: print random number step
+        id: print-random-number-step
+        run: echo random-number ${{ steps.foo.outputs.random-number }}
         shell: bash
